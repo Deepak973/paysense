@@ -1,0 +1,46 @@
+/* Navbar.module.css */
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(40, 44, 52, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .logo a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .navLinks {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .navLink {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .navLink:hover {
+    color: #6c63ff;
+  }
+  
+  .connectButtonWrapper {
+    display: flex;
+    align-items: center;
+  }
+  

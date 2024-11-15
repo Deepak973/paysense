@@ -1,0 +1,76 @@
+.transactionContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    background-color: #f4f7fc;
+  }
+  
+  .h2 {
+    color: #333;
+  }
+  
+  .block {
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+  }
+  
+  .blockTitle {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+  }
+  
+  .fetchButton {
+    padding: 0.8rem 1.5rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .fetchButton:disabled {
+    background-color: #6c757d;
+  }
+  
+  .errorMessage {
+    color: red;
+    font-size: 1rem;
+  }
+  
+  .scoreBar {
+    height: 20px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin-top: 1rem;
+  }
+  
+  .scoreFill {
+    height: 100%;
+    background-color: #28a745;
+    border-radius: 10px;
+  }
+  
+  .p {
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .transactionContainer {
+      padding: 1rem;
+    }
+  
+    .block {
+      padding: 1rem;
+    }
+  
+    .fetchButton {
+      width: 100%;
+    }
+  }
+  
