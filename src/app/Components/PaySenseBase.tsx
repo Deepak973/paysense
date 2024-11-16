@@ -140,7 +140,7 @@ const PaySenseBase: React.FC<TransactionAnalysisProps> = ({ recipientAddress, wa
     if (totalTransactions > 10) return 100;
     if (totalTransactions > 6) return 80;
     if (totalTransactions > 4) return 70;
-    if (totalTransactions > 2) return 50;
+    if (totalTransactions >= 1) return 50;
   
     return 0;
   };

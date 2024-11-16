@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers, parseEther } from "ethers";
 import { useAccount, useWriteContract } from "wagmi";
-import { Wallet } from "lucide-react";
+import { Wallet, Users } from "lucide-react";
 import { waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '@/app/utils/config';
 import Link from "next/link";
@@ -91,7 +91,6 @@ function PaySenseCreateWallet() {
           })
         ]);
 
-        alert("Watch the CCIP creation at " + "https://ccip.chain.link/tx/"+tx)
         setSuccessMessage("Multisig wallet created successfully!");
         fetchWallets();
       }
@@ -103,13 +102,63 @@ function PaySenseCreateWallet() {
     }
   };
 
+  const WalletCard = ({ wallet }: { wallet: WalletType }) => (
+    <Link href={`/pay-now/${wallet.walletAddress}`}>
+      <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 cursor-pointer border border-gray-200">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between border-b border-gray-100 pb-2">
+            <span className="font-semibold text-black text-lg">Wallet Details</span>
+            <span className="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-sm font-medium">
+              {wallet.chain}
+            </span>
+          </div>
+          
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-medium text-black">Address</span>
+              <span className="text-sm text-black font-mono">
+                {`${wallet.walletAddress.slice(0, 6)}...${wallet.walletAddress.slice(-4)}`}
+              </span>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <span className="font-medium text-black">Required Confirmations</span>
+              <span className="text-black">{wallet.numConfirmationsRequired}</span>
+            </div>
+            
+            <div className="flex items-center justify-between">
+              <span className="font-medium text-black">Created</span>
+              <span className="text-black">
+                {new Date(wallet.createdAt).toLocaleDateString()}
+              </span>
+            </div>
+
+            <div className="mt-4 space-y-2">
+              <div className="flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                <span className="font-medium text-black">Members</span>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-3 space-y-2">
+                {wallet.owners.map((owner, idx) => (
+                  <div key={idx} className="text-sm text-black font-mono">
+                    {`${owner.slice(0, 6)}...${owner.slice(-4)}`}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-7xl mx-auto space-y-8">
         {/* Creation Form */}
         <div className="bg-white rounded-xl shadow-lg p-6">
           <div className="mb-6">
-            <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-800">
+            <h1 className="flex items-center gap-2 text-2xl font-bold text-black">
               <Wallet className="w-6 h-6" />
               Create MultiSig Wallet
             </h1>
@@ -117,7 +166,7 @@ function PaySenseCreateWallet() {
 
           <div className="space-y-6">
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-gray-700">Wallet Owners</label>
+              <label className="block text-sm font-medium text-black">Wallet Owners</label>
               {owners.map((owner, index) => (
                 <div key={index} className="flex gap-2">
                   <input
@@ -129,12 +178,12 @@ function PaySenseCreateWallet() {
                       newOwners[index] = e.target.value;
                       setOwners(newOwners);
                     }}
-                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black"
                   />
                   {index === owners.length - 1 && (
                     <button
                       onClick={() => setOwners([...owners, ""])}
-                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-black"
                     >
                       Add Owner
                     </button>
@@ -144,7 +193,7 @@ function PaySenseCreateWallet() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-black mb-1">
                 Required Confirmations
               </label>
               <input
@@ -153,7 +202,7 @@ function PaySenseCreateWallet() {
                 max={owners.length}
                 value={numConfirmationsRequired}
                 onChange={(e) => setNumConfirmationsRequired(parseInt(e.target.value))}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors text-black"
               />
             </div>
 
@@ -173,7 +222,7 @@ function PaySenseCreateWallet() {
               className={`w-full py-3 px-4 rounded-lg text-white font-medium 
                 ${isLoading 
                   ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-colors'
+                  : 'bg-blue-600 hover:bg-blue-700 transition-colors'
                 }`}
             >
               {isLoading ? "Creating..." : "Create Wallet"}
@@ -182,45 +231,37 @@ function PaySenseCreateWallet() {
         </div>
 
         {/* Wallets List */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-gray-800">Your Wallets</h2>
-          <div className="space-y-4">
-            {wallets.length > 0 ? (
-              wallets.map((wallet, index) => (
-                <Link key={index} href={`/pay-now/${wallet.walletAddress}`}>
-                  <div className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow p-6 cursor-pointer">
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-700">Chain</span>
-                        <span className="text-blue-600">{wallet.chain}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-700">Address</span>
-                        <span className="text-sm text-gray-600 font-mono">
-                          {`${wallet.walletAddress.slice(0, 6)}...${wallet.walletAddress.slice(-4)}`}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-700">Confirmations Required</span>
-                        <span className="text-gray-600">{wallet.numConfirmationsRequired}</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="font-medium text-gray-700">Created</span>
-                        <span className="text-sm text-gray-600">
-                          {new Date(wallet.createdAt).toLocaleDateString()}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))
-            ) : (
-              <div className="bg-white rounded-xl shadow-md p-6 text-center text-gray-500">
-                No wallets created yet
-              </div>
-            )}
+        {wallets.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Base Chain Wallets */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-black flex items-center gap-2">
+                Base Chain Wallets
+              </h2>
+              {wallets
+                .filter(wallet => wallet.chain === "Base")
+                .map((wallet, index) => (
+                  <WalletCard key={index} wallet={wallet} />
+                ))}
+            </div>
+
+            {/* Optimism Chain Wallets */}
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold text-black flex items-center gap-2">
+                Optimism Chain Wallets
+              </h2>
+              {wallets
+                .filter(wallet => wallet.chain === "Optimism")
+                .map((wallet, index) => (
+                  <WalletCard key={index} wallet={wallet} />
+                ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-white rounded-xl shadow-md p-6 text-center text-black">
+            No wallets created yet
+          </div>
+        )}
       </div>
     </div>
   );
