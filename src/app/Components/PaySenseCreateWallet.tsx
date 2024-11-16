@@ -52,10 +52,10 @@ function PaySenseCreateWallet() {
     setIsLoading(true);
     try {
       const tx = await writeContractAsync({
-        address: "0x8E0B8D2854ee5f764cF996250F5D388fb57ec42F",
+        address: "0x50b9D851d00CEd444bB968Ee74Ec2abcAe802B8e",
         abi: multisigFactoryAbi,
         functionName: "createWallet",
-        args: ["5224473277236331295", "0x8E0B8D2854ee5f764cF996250F5D388fb57ec42F", owners, numConfirmationsRequired],
+        args: ["5224473277236331295", "0x50b9D851d00CEd444bB968Ee74Ec2abcAe802B8e", owners, numConfirmationsRequired,"0xafa38de911bc4e08fe39d64af67f4f62a98c05e9fcc64fc072e6ac299f8a0848"],
         value: parseEther("0.0001"),
       });
 

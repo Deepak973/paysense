@@ -72,38 +72,14 @@
 				"internalType": "uint256",
 				"name": "_numConfirmationsRequired",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "salt",
+				"type": "bytes32"
 			}
 		],
 		"name": "createWallet",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "messageId",
-				"type": "bytes32"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes",
-				"name": "bytecode",
-				"type": "bytes"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_salt",
-				"type": "bytes32"
-			}
-		],
-		"name": "deploy",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -202,44 +178,12 @@
 	},
 	{
 		"inputs": [],
-		"name": "getAllWallets",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "getRouter",
 		"outputs": [
 			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_user",
-				"type": "address"
-			}
-		],
-		"name": "getUserWallets",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
