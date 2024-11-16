@@ -9,6 +9,8 @@ import {baseSepolia,
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Navbar from "./Components/Navbar";
 
+import 'react-toastify/dist/ReactToastify.css';
+
 
 interface RootLayoutProps {
   children: React.ReactNode;

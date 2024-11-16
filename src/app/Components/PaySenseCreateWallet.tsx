@@ -7,6 +7,7 @@ import { waitForTransactionReceipt } from '@wagmi/core';
 import { config } from '@/app/utils/config';
 import Link from "next/link";
 import multisigFactoryAbi from "../Contract/PaysenseFactoryABI.json";
+import { toast, ToastContainer } from "react-toastify";
 
 interface WalletType {
   owners: string[];
@@ -40,6 +41,7 @@ function PaySenseCreateWallet() {
   useEffect(() => {
     if (address) {
       fetchWallets();
+      
     }
   }, [address]);
 
@@ -93,7 +95,11 @@ function PaySenseCreateWallet() {
           })
         ]);
 
-        setSuccessMessage("Multisig wallet created successfully!");
+        setSuccessMessage("https://ccip.chain.link/tx/"+walletAddress);
+        toast.success("Multisig wallet created successfully!",{
+          position: "top-center"
+        })
+        
         fetchWallets();
       }
     } catch (error) {
@@ -265,6 +271,7 @@ function PaySenseCreateWallet() {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

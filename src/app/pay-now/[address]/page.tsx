@@ -9,6 +9,7 @@ import PaySenseAppAbi from "../../Contract/PaysenseABI.json";
 import { getTokenDetails } from "../../utils/tokenDetails";
 import { useParams } from "next/navigation";
 import { baseSepolia } from "viem/chains";
+import { toast, ToastContainer } from "react-toastify";
 
 interface TokenDetails {
   name: string;
@@ -200,9 +201,13 @@ function Page() {
         const result = await response.json();
   
         if (response.ok) {
-          alert("Transaction request created successfully!");
+          toast.success("Transaction request created successfully!",{
+            position: "top-center"
+          });
         } else {
-          alert(result.message || "Error creating transaction request.");
+          toast.error(result.message || "Error creating transaction request.",{
+            position: "top-center"
+          });
         }
       }
     } catch (err) {
@@ -327,9 +332,13 @@ function Page() {
           const updatedTransactions = [...pendingTransactions];
           updatedTransactions[index].signatures.push({ signer: address as string, signature });
           setPendingTransactions(updatedTransactions);
-          alert("Signature added successfully!");
+          toast.success("Signature added successfully!",{
+            position: "top-center"
+          });
         } else {
-          alert(result.message || "Error adding signature.");
+          toast.error(result.message || "Error adding signature.",{
+            position: "top-center"
+          });
         }
       } catch (err) {
         console.error("Error signing transaction:", err);
@@ -372,10 +381,14 @@ function Page() {
         }),
       });
 
-      alert("https://ccip.chain.link/tx/"+response)
+      toast.success("https://ccip.chain.link/tx/"+response, {
+        position: "top-center"
+      })
      
     } else {
-      alert("Not enough signatures to execute this transaction.");
+      toast.error("Not enough signatures to execute this transaction.",{
+        position: "top-center"
+      });
     }
   }};
 
@@ -550,6 +563,7 @@ function Page() {
           <PaySenseApp recipientAddress={recipientAddress} walletAddress={walletAddress as Address} />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 
