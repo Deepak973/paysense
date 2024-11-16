@@ -13,6 +13,8 @@ contract Paysense is EIP712 {
 
     IRouterClient private s_router;
 
+    bool private initialized;
+
     error NotEnoughBalance(uint256 currentBalance, uint256 calculatedFees);
 
     bytes32 private constant EXECUTE_TYPEHASH =
@@ -20,26 +22,22 @@ contract Paysense is EIP712 {
             "Execute(address to,uint256 value,bytes data,uint256 nonce,uint256 deadline)"
         );
 
-    /**
-     * @dev Initializes the multi-signature wallet contract.
-     * @param _owners An array of addresses representing the initial wallet owners.
-     * @param _numConfirmationsRequired The minimum number of owner confirmations required for transaction execution.
-     * @notice At least 1 owner is required to create the wallet.
-     * @notice The threshold for confirmations should be set to 2 or more.
-     * @notice Each owner must have a unique address, and zero addresses are not allowed.
-     * @notice The number of required confirmations must be between 2 and the total number of owners.
-     * @notice This function is called only once during contract deployment.
-     */
-    constructor(
+
+    constructor() EIP712("PaysenseCCIP", "1") {
+    }
+
+   function initialize(
         address[] memory _owners,
         uint256 _numConfirmationsRequired,
         address _router
-    ) EIP712("MultisigCCIP", "1") {
+    ) external {
+        require(!initialized, "Already initialized");
+
         uint256 ownerCount = _owners.length;
         require(ownerCount >= 1, "At least 1 owner required");
         require(
-            _numConfirmationsRequired >= 2 &&
-                _numConfirmationsRequired <= ownerCount,
+            _numConfirmationsRequired >= 2 && 
+            _numConfirmationsRequired <= ownerCount,
             "Invalid threshold"
         );
 
@@ -58,13 +56,10 @@ contract Paysense is EIP712 {
         ownersCount = ownerCount;
         numConfirmationsRequired = _numConfirmationsRequired;
         s_router = IRouterClient(_router);
-        
+
+        initialized = true;
     }
 
-    function setCCIPRouter  (address _router) public onlyOwners
-    {
-       s_router = IRouterClient(_router);
-    }
     mapping(bytes32 => bool) internal _authorizationStates;
 
     modifier nonceNotUsed(bytes32 nonce) {
@@ -127,15 +122,15 @@ contract Paysense is EIP712 {
         _;
     }
 
-    /// @notice Default receive function that allows the contract to accept incoming Ether
-    receive() external payable {
-        emit Deposit(msg.sender, msg.value, address(this).balance);
-    }
+    // /// @notice Default receive function that allows the contract to accept incoming Ether
+    // receive() external payable {
+    //     emit Deposit(msg.sender, msg.value, address(this).balance);
+    // }
 
-    /// @notice Fallback function to handle Ether sent to the contract without a specific function call
-    fallback() external payable {
-        emit Deposit(msg.sender, msg.value, address(this).balance);
-    }
+    // /// @notice Fallback function to handle Ether sent to the contract without a specific function call
+    // fallback() external payable {
+    //     emit Deposit(msg.sender, msg.value, address(this).balance);
+    // }
 
     function executeTransaction(
         address to,
@@ -318,7 +313,5 @@ contract Paysense is EIP712 {
         require(sent, "Failed to send Ether");
     }
 
-    function getContractBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
+
 }
