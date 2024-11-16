@@ -41,7 +41,10 @@ const PaySenseApp: React.FC<TransactionAnalysisProps> = ({ recipientAddress, wal
 
   return (
     <div className={style.transactionContainer}>
-      <h2 className={style.title}>Know your Recipient</h2>
+      <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Know your Recipient</h1>
+              <br></br>
+ 
       <div className={style.addressCard}>
         <div className={style.addressText}>{recipientAddress ? recipientAddress : "No Address added"}</div>
       </div>

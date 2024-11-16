@@ -272,7 +272,7 @@ const PaySenseBase: React.FC<TransactionAnalysisProps> = ({ recipientAddress, wa
             {contractsCreated.map((contractAddress, index) => (
               <a
                 key={index}
-                href={`https://basescan.org/address/${contractAddress}`}
+                href={`https://base-sepolia.blockscout.com/address/${contractAddress}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={style.contractItem}

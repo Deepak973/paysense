@@ -380,132 +380,179 @@ function Page() {
   }};
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-6xl w-full text-gray-800 flex justify-between">
-        <div className="w-full max-w-lg">
-          <h1 className="text-center text-3xl font-bold text-gray-800 mb-6">Send Funds</h1>
-          {contractTokenDetails && contractTokenDetails.balance ? (
-    <p className="text-lg text-gray-800 mb-4">Wallet USDC Balance: {formatUnits(contractTokenDetails.balance, 6)} USDC</p>
-  ) : (
-    <p className="text-lg text-gray-800 mb-4">Wallet USDC Balance: 0</p>
-  )}
-          <input
-            type="text"
-            placeholder="Enter Ethereum Address"
-            value={recipientAddress}
-            onChange={(e) => setRecipientAddress(e.target.value)}
-            className="w-full p-4 rounded-md border border-gray-300 mb-4 text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <input
-            type="text"
-            placeholder="Enter Amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full p-4 rounded-md border border-gray-300 mb-4 text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-
-          <div className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              id="isERC20"
-              checked={isERC20}
-              onChange={() => setIsERC20(!isERC20)}
-              className="mr-2"
-            />
-            <label htmlFor="isERC20" className="text-lg text-gray-800">Send ERC-20 Token</label>
-          </div>
-
-          {isERC20 && (
-            <div className="mb-4">
-              <input
-                type="text"
-                placeholder="Enter ERC-20 Token Address"
-                value={tokenAddress}
-                onChange={(e) => setTokenAddress(e.target.value)}
-                className="w-full p-4 rounded-md border border-gray-300 mb-4 text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {tokenDetails && (
-                <div className="mb-2">
-                  <p>Token: {tokenDetails.name} ({tokenDetails.symbol})</p>
-                  <p>Balance: {formatUnits(tokenDetails.balance, Number(tokenDetails.decimals))}</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 p-6">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6">
+        {/* Left Panel - Transaction Form */}
+        <div className="w-full md:w-1/2 bg-white/10 backdrop-blur-lg rounded-2xl p-8 text-white shadow-xl">
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                PaySense Transfer
+              </h1>
+              {contractTokenDetails && (
+                <div className="mt-4 text-xl font-medium">
+                  <span className="text-blue-300">USDC Balance: </span>
+                  <span className="text-white">
+                    {formatUnits(contractTokenDetails.balance, 6)} USDC
+                  </span>
                 </div>
               )}
             </div>
-          )}
 
-          {/* Cross-Chain Option */}
-          <div className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              id="crossChain"
-              checked={crossChain}
-              onChange={() => setCrossChain(!crossChain)}
-              className="mr-2"
-            />
-            <label htmlFor="crossChain" className="text-lg text-gray-800">Cross-Chain Transaction (USDC)</label>
-          </div>
+            {/* Transaction Form */}
+            <div className="space-y-4">
+              <input
+                type="text"
+                placeholder="Recipient Address"
+                value={recipientAddress}
+                onChange={(e) => setRecipientAddress(e.target.value)}
+                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl focus:outline-none focus:border-blue-400 transition-colors"
+              />
 
-          {crossChain && (
-            <div className="mb-4">
-              <select
-                value={selectedChain}
-                onChange={(e) => setSelectedChain(e.target.value)}
-                className="w-full p-4 rounded-md border border-gray-300 text-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="Optimism">Optimism</option>
-                <option value="Sepolia">Sepolia</option>
-              </select>
-            </div>
-          )}
+              <input
+                type="text"
+                placeholder="Amount"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl focus:outline-none focus:border-blue-400 transition-colors"
+              />
 
-          <button
-            onClick={() => createAndSignTransaction(handleTransactionType())}
-            className="w-full bg-blue-500 text-white py-4 rounded-md font-bold text-lg focus:outline-none hover:bg-blue-600 transition duration-200"
-          >
-            Create & Sign Transaction
-          </button>
+              {/* Token Selection */}
+              <div className="flex items-center space-x-4 p-4 bg-white/5 rounded-xl">
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={isERC20}
+                    onChange={() => setIsERC20(!isERC20)}
+                    className="form-checkbox h-5 w-5 text-blue-400 rounded"
+                  />
+                  <span className="ml-2">ERC-20 Token</span>
+                </label>
 
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold mb-4">Pending Transactions</h2>
+                <label className="inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={crossChain}
+                    onChange={() => setCrossChain(!crossChain)}
+                    className="form-checkbox h-5 w-5 text-purple-400 rounded"
+                  />
+                  <span className="ml-2">Cross-Chain (USDC)</span>
+                </label>
+              </div>
 
-            {pendingTransactions && pendingTransactions.length > 0 ? (
-              pendingTransactions.map((tx, index) => (
-                <div key={index} className="border-b py-4">
-                  <p><strong>Recipient:</strong> {tx.recipient}</p>
-                  <p><strong>Amount:</strong> {tx.amount}</p>
-                  <p><strong>Signatures:</strong> {tx.signatures.length} / {requiredSignatures}</p>
-
-                  {/* Show Sign button if transaction is not executed and signatures are still needed */}
-                  {!tx.isExecuted && tx.signatures.length < requiredSignatures && (
-                    <button onClick={() => signTransaction(index)} className="bg-yellow-500 text-white py-2 px-4 rounded mt-2">
-                      Sign
-                    </button>
+              {isERC20 && (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="Token Address"
+                    value={tokenAddress}
+                    onChange={(e) => setTokenAddress(e.target.value)}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl focus:outline-none focus:border-blue-400 transition-colors"
+                  />
+                  {tokenDetails && (
+                    <div className="p-4 bg-white/5 rounded-xl">
+                      <p className="text-blue-300">
+                        {tokenDetails.name} ({tokenDetails.symbol})
+                      </p>
+                      <p className="text-sm">
+                        Balance: {formatUnits(tokenDetails.balance, Number(tokenDetails.decimals))}
+                      </p>
+                    </div>
                   )}
-
-                  {/* Show Execute button if transaction is not executed and required signatures are met */}
-                  {!tx.isExecuted && tx.signatures.length >= requiredSignatures && (
-                    <button onClick={() => executeTransaction(tx)} className="bg-green-500 text-white py-2 px-4 rounded mt-2">
-                      Execute
-                    </button>
-                  )}
-
-                  {/* Show Executed message if transaction has been executed */}
-                  {tx.isExecuted && <p className="text-green-500 font-bold mt-2">Executed</p>}
                 </div>
-              ))
-            ) : (
-              <p>No pending transactions found.</p> // Fallback message when there are no pending transactions
-            )}
+              )}
+
+              {crossChain && (
+                <select
+                  value={selectedChain}
+                  onChange={(e) => setSelectedChain(e.target.value)}
+                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl focus:outline-none focus:border-blue-400 transition-colors"
+                >
+                  <option value="Optimism">Optimism</option>
+                  <option value="Sepolia">Sepolia</option>
+                </select>
+              )}
+
+              <button
+                onClick={() => createAndSignTransaction(handleTransactionType())}
+                className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-200 transform hover:scale-[1.02]"
+              >
+                Create & Sign Transaction
+              </button>
+            </div>
+
+            {/* Pending Transactions */}
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Pending Transactions
+              </h2>
+              <div className="space-y-4">
+                {pendingTransactions && pendingTransactions.length > 0 ? (
+                  pendingTransactions.map((tx, index) => (
+                    <div
+                      key={index}
+                      className="p-4 bg-white/5 border border-white/20 rounded-xl space-y-2"
+                    >
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <p className="text-sm text-blue-300">Recipient</p>
+                          <p className="text-white truncate">{tx.recipient}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-blue-300">Amount</p>
+                          <p className="text-white">{tx.amount}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between mt-4">
+                        <span className="text-sm">
+                          Signatures: {tx.signatures.length} / {requiredSignatures}
+                        </span>
+                        <div className="space-x-2">
+                          {!tx.isExecuted && tx.signatures.length < requiredSignatures && (
+                            <button
+                              onClick={() => signTransaction(index)}
+                              className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 rounded-lg transition-colors"
+                            >
+                              Sign
+                            </button>
+                          )}
+                          {!tx.isExecuted && tx.signatures.length >= requiredSignatures && (
+                            <button
+                              onClick={() => executeTransaction(tx)}
+                              className="px-4 py-2 bg-green-500 hover:bg-green-600 rounded-lg transition-colors"
+                            >
+                              Execute
+                            </button>
+                          )}
+                          {tx.isExecuted && (
+                            <span className="px-4 py-2 bg-green-500/20 text-green-300 rounded-lg">
+                              Executed
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-400">
+                    No pending transactions
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="flex-1 ml-4 hidden md:block">
+        {/* Right Panel - PaySense Component */}
+        <div className="w-full md:w-1/2 text-black">
           <PaySenseApp recipientAddress={recipientAddress} walletAddress={walletAddress as Address} />
         </div>
       </div>
     </div>
   );
+
 };
 
 
