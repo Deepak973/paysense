@@ -1,76 +1,238 @@
 .transactionContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 2rem;
-    background-color: #f4f7fc;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.title {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.addressCard {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.addressText {
+  color: white;
+  font-family: monospace;
+  font-size: 1.1rem;
+  word-break: break-all;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.infoCard {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s;
+}
+
+.infoCard:hover {
+  transform: translateY(-2px);
+}
+
+.contractCard {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+.eoaCard {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.cardContent {
+  text-align: center;
+}
+
+.iconWrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.accountTypeDesc {
+  margin-top: 0.5rem;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.lastSeenTime {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.activeToday {
+  color: #10b981;
+}
+
+.daysAgo {
+  color: #6b7280;
+}
+
+.circularScore {
+  margin-top: 1rem;
+}
+
+.scoreCircle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+}
+
+.scoreValue {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  background: white;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.statsCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.statsIcon {
+  color: #6366f1;
+}
+
+.statsContent h4 {
+  color: #6b7280;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.statsValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.gasCard {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.gasContent {
+  text-align: center;
+}
+
+.gasValue {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.gasValue span {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.contractsSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contractsSection h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1a1a1a;
+  margin-top: 0;
+}
+
+.contractsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contractItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: #f3f4f6;
+  border-radius: 8px;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-family: monospace;
+  transition: background-color 0.2s;
+}
+
+.contractItem:hover {
+  background: #e5e7eb;
+}
+
+.linkIcon {
+  opacity: 0.5;
+}
+
+.errorMessage {
+  color: #ef4444;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .topGrid {
+    grid-template-columns: 1fr;
   }
   
-  .h2 {
-    color: #333;
+  .statsGrid {
+    grid-template-columns: 1fr;
   }
   
-  .block {
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-  }
-  
-  .blockTitle {
+  .gasValue {
     font-size: 1.5rem;
-    color: #007bff;
-    margin-bottom: 1rem;
   }
-  
-  .fetchButton {
-    padding: 0.8rem 1.5rem;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .fetchButton:disabled {
-    background-color: #6c757d;
-  }
-  
-  .errorMessage {
-    color: red;
-    font-size: 1rem;
-  }
-  
-  .scoreBar {
-    height: 20px;
-    width: 100%;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    margin-top: 1rem;
-  }
-  
-  .scoreFill {
-    height: 100%;
-    background-color: #28a745;
-    border-radius: 10px;
-  }
-  
-  .p {
-    font-size: 1rem;
-  }
-  
-  @media (max-width: 768px) {
-    .transactionContainer {
-      padding: 1rem;
-    }
-  
-    .block {
-      padding: 1rem;
-    }
-  
-    .fetchButton {
-      width: 100%;
-    }
-  }
-  
+}
