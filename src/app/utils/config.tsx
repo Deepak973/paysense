@@ -13,8 +13,10 @@ export const config = createConfig({
   },
 });
 
-export const walletClient = createWalletClient({
-  chain: baseSepolia,
-  transport: custom(window.ethereum!),
-})
+export const walletClient = typeof window !== "undefined" && window.ethereum
+  ? createWalletClient({
+      chain: baseSepolia,
+      transport: custom(window.ethereum),
+    })
+  : null;
 
