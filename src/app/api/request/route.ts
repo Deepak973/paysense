@@ -156,7 +156,7 @@ export async function GET(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  const { walletAddress, nonce, newStatus } = await req.json();
+  const { walletAddress, nonce, newStatus, txHash} = await req.json();
 
   const client = await MongoClient.connect(MONGODB_URI);
   const db = client.db(DB_NAME);
@@ -164,7 +164,7 @@ export async function PATCH(req: Request) {
 
   try {
     // Check if the request exists
-    const existingRequest = await collection.findOne({ walletAddress, nonce });
+    const existingRequest = await collection.findOne({ walletAddress, nonce,  });
 
     if (!existingRequest) {
       return new NextResponse(
@@ -176,7 +176,13 @@ export async function PATCH(req: Request) {
     // Update the request status
     const result = await collection.updateOne(
       { walletAddress, nonce },
-      { $set: { status: newStatus || "completed" } }
+      {
+      $set: { 
+        status: newStatus || "completed",
+        txHash: txHash 
+      } 
+    }
+  
     );
 
     return new NextResponse(

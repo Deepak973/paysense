@@ -9,7 +9,7 @@ const COLLECTION_NAME = "paysense-wallets";
 
 // Store wallet in MongoDB
 export async function POST(req: Request) {
-  const { owners, numConfirmationsRequired, createdBy ,walletAddress } = await req.json();
+  const { owners, numConfirmationsRequired, createdBy ,walletAddress, chain } = await req.json();
 
   if (!createdBy) {
     return new NextResponse(JSON.stringify({ message: "createdBy is required" }), { status: 400 });
@@ -26,6 +26,7 @@ export async function POST(req: Request) {
       createdBy,
       walletAddress,
       createdAt: new Date(),
+      chain: chain
     });
     return new NextResponse(JSON.stringify({ message: "Wallet created", result }), { status: 201 });
   } catch (error) {

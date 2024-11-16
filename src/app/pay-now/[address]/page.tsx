@@ -144,7 +144,7 @@ function Page() {
         const signature = await client.signTypedData({
           account: address as Address,
           domain: {
-            name: "MultisigCCIP",
+            name: "PaysenseCCIP",
             version: "1",
             chainId: BigInt(84532),
             verifyingContract: walletAddress as Address,
@@ -276,7 +276,7 @@ function Page() {
         const signature = await client.signTypedData({
           account: address as Address,
           domain: {
-            name: "MultisigCCIP",
+            name: "PaysenseCCIP",
             version: "1",
             chainId: BigInt(84532),
             verifyingContract: transaction.walletAddress as Address,
@@ -354,6 +354,7 @@ function Page() {
         abi: PaySenseAppAbi,
         functionName: 'executeTransaction',
         args: [transaction.walletAddress, BigInt(0), transaction.requestDetails, transaction.deadline, transaction.nonce, signatures],
+        value :parseEther("0.01")
        });
 
     if (response) {
@@ -367,8 +368,12 @@ function Page() {
           walletAddress: walletAddress,
           nonce: transaction.nonce,
           status: "completed",  // Update the status to completed
+          txHash: response
         }),
       });
+
+      alert("https://ccip.chain.link/tx/"+response)
+     
     } else {
       alert("Not enough signatures to execute this transaction.");
     }
