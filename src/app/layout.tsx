@@ -4,9 +4,7 @@ import "./globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { WagmiProvider } from "wagmi";
-import {
-
-  base,
+import {baseSepolia,
 } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import Navbar from "./Components/Navbar";
@@ -20,7 +18,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const config = getDefaultConfig({
     appName: "RainbowKit demo",
     projectId: "f8a6524307e28135845a9fe5811fcaa2",
-    chains: [base],
+    chains: [baseSepolia],
     ssr: true,
   });
   

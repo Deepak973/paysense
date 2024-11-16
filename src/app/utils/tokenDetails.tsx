@@ -1,7 +1,7 @@
 import { createPublicClient, http } from "viem";
 import erc20Abi from "../Contract/ERC20ABI.json";
 import { getContract } from "viem";
-import { base } from "viem/chains";
+import { baseSepolia } from "viem/chains";
 import { getChainId } from '@wagmi/core';
 import { initializeClient } from "./publicClient";
 import { config } from "@/app/utils/config";

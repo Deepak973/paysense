@@ -1,20 +1,20 @@
 import { http, createConfig } from "@wagmi/core";
 import {
-  base
+  baseSepolia
 } from "@wagmi/core/chains";
 import { createWalletClient, custom } from 'viem'
 // import { base } from 'viem/chains'
 
 export const config = createConfig({
-  chains: [base],
+  chains: [baseSepolia],
   transports: {
-    [base.id]: http(),
+    [baseSepolia.id]: http(),
    
   },
 });
 
 export const walletClient = createWalletClient({
-  chain: base,
+  chain: baseSepolia,
   transport: custom(window.ethereum!),
 })
 
