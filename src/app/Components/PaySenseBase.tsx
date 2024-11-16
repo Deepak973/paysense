@@ -289,7 +289,7 @@ const PaySenseBase: React.FC<TransactionAnalysisProps> = ({ recipientAddress, wa
 };
 
 const getScoreColor = (score: number) => {
-  if (score >= 80) return '#4CAF50';
+  if (score >= 70) return '#4CAF50';
   if (score >= 50) return '#FBC02D';
   return '#F44336';
 };
