@@ -50,12 +50,14 @@ function PaySenseCreateWallet() {
     }
 
     setIsLoading(true);
+    const timestamp = Date.now(); // Get the current timestamp in milliseconds
+    const salt = "0x" + timestamp.toString(16).padStart(64, "0");
     try {
       const tx = await writeContractAsync({
         address: "0x50b9D851d00CEd444bB968Ee74Ec2abcAe802B8e",
         abi: multisigFactoryAbi,
         functionName: "createWallet",
-        args: ["5224473277236331295", "0x50b9D851d00CEd444bB968Ee74Ec2abcAe802B8e", owners, numConfirmationsRequired,"0xafa38de911bc4e08fe39d64af67f4f62a98c05e9fcc64fc072e6ac299f8a0848"],
+        args: ["5224473277236331295", "0x50b9D851d00CEd444bB968Ee74Ec2abcAe802B8e", owners, numConfirmationsRequired,salt],
         value: parseEther("0.0001"),
       });
 
